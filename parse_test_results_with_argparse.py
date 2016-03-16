@@ -6,24 +6,8 @@ import re
 import sys
 
 DATETIME_RE = re.compile(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')
-# import sys
-# import gzip
-# import argparse
-# # from os import path, listdir
-# # from os.path import isfile, join
-# from datetime import datetime
-# import os
-# #import datetime
 
-'''
-opts = []
-args = []
-verbose = False
-inputpath = ''
-inputdate = ''
-inputtime = ''
-searchstring = ''
-'''
+
 # input format: "yyyy-mm-dd hh:mm:ss" (not necessarily all these fields) and a string (uuid for example)
 # program takes in the format, and is run inside of a directory with .txt.gz files. 
 # output is all lines in all of these .txt.gz files that contain the inputs above
@@ -47,93 +31,37 @@ def read_file (myinputfile):
     return filecontent
 
 	
-		
-# # arguemnts are passed in from the command line
-# def process_file(content):
-#     #content = read_file (myfile)
-#     #for i in range(len(content)):
-#     pattern = "%Y-%m-%d %H:%M:%S.%f"
-#     print "DATE=%s"  % args.DATE
-#     print "TIME=%s" % args.TIME
-
-#     print "{} {}".format(args.DATE, args.TIME)
-#     input_datetime = datetime.datetime.strptime("{} {}".format(args.DATE, args.TIME) , pattern)
-#     print "input_datetime here=%s" % input_datetime
-#     found_date = False
-#     for line in content:
-#         print "in the loop line=%s" % line
-#         line = line.rstrip()
-# #        if line.startswith('+') or line.startswith('Option'): # ignore first few lines
-# #            continue
-#         if found_date:
-#             print "found_date printing"
-#             print line
-#             continue
-
-#         if args.STRING and args.STRING not in line:
-#             continue
-
-#         print "line here %s" % line
-#         line_datetime = get_line_datetime(line)
-#         print "line_datetime= ", line_datetime
-#         print "input_datetime= ", input_datetime
-		
-#         if line_datetime < input_datetime:
-#             continue
-#         found_date = True
-#         #if you have reached here, this is one of your output line
-#         print line
-
 def process_file2(content, mydate=None, mytime=None, mystring=None):
-    #content = read_file (myfile)
-    #for i in range(len(content)):
-    pattern = "%Y-%m-%d %H:%M:%S.%f"
-    #print "DATE=%s"  % args.DATE
-    #print "TIME=%s" % args.TIME
 
-    #print "{} {}".format(args.DATE, args.TIME)
+    pattern = "%Y-%m-%d %H:%M:%S.%f"
+
     input_datetime = datetime.datetime.strptime("{} {}".format(mydate, mytime) , pattern)
-    #print "input_datetime here=%s" % input_datetime
 
     output = []
     match = 0
     for line in content:
-        #print "in the loop line=%s" % line
-        #print "match=%s" % match
         line = line.rstrip()
 
         if not match: #until we reach a match point in the file in terms of date/time
-            #print "match in if=%s" % match
             if mystring and mystring not in line:
-                #print "going back..."
                 continue
 
-            #print "line here %s" % line
             line_datetime = get_line_datetime(line)
-            #print "line_datetime= ", line_datetime
-            #print "input_datetime= ", input_datetime
+
             if line_datetime is not None:
                 if line_datetime >= input_datetime:
-                    #print "i am herererrere"
-                    #print line
                     output.append(line)
                     match = 1
         else:
             # At this point we have found a date/time match and now we print all future lines that match our string search parameter, if specified
-            #print "match in else=%s" % match
-            # print "mystring", mystring
             if mystring:
                 if mystring in line:
-            # if str(mystring) in line:
-                #print "printing final line"
-                #print line
                     output.append(line)
             else:
                 # mystring not set, therefore output the line
                 output.append(line)
 
         #if you have reached here, this is one of your output line
-        #print line
     return output
 		
 		
@@ -144,17 +72,14 @@ def get_line_datetime(line):
     :returns: datetime.datetime() object if datetime found
     :returns: None if no datetime found
     """
-    #print "line inside= ", line
     if not DATETIME_RE.search(line):
         return None
     
     splitline = line.split(' ', 2) #collect for just the date and time parts
     filedatetime = splitline[0] + ' ' + splitline[1]
     pattern = "%Y-%m-%d %H:%M:%S.%f"
-    #print "filedatetime= ", filedatetime
     try:
         parsed_datetime = datetime.datetime.strptime(filedatetime, pattern)
-        #print "parsed_datetime= ", parsed_datetime
     except ValueError:
         parsed_datetime = None
     return parsed_datetime
@@ -163,7 +88,6 @@ def get_line_datetime(line):
 def process_all_input_files(myfiles, mydate, mytime, mystring):
     for myfile in myfiles:
         content = read_file (myfile)
-        #print "ZZZZZZZZZZZ";
         result = process_file2(content, mydate, mytime, mystring)
         for line in result:
             print line
@@ -222,22 +146,15 @@ def main ():
     if args.VERBOSE:	
         print "args:", args
 
-    # final_path = args.PATH
-    # final_date = args.DATE
-    # final_time = args.TIME
     if args.PATH:
         if not os.path.exists(args.PATH):
             print ("Path:[%s] does not exist. Check your input." % args.PATH)
             sys.exit(1)
 
     args.DATE, args.TIME = validate_inputs(args.DATE, args.TIME)
-    # args.PATH = final_path
-    # args.DATE = final_date
-    # args.TIME = final_time
 	
     inputfiles = get_all_input_files(args.PATH)
-    #print "cccccccc"
-    #print inputfiles
+
     process_all_input_files(inputfiles, args.DATE, args.TIME, args.STRING)
 	
 
