@@ -10,10 +10,10 @@ import sys
 DATETIME_RE = re.compile(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')
 
 
-# input format: "yyyy-mm-dd hh:mm:ss" (not necessarily all these fields) and a string (uuid for example)
-# program takes in the format, and is run inside of a directory with .txt.gz files.
-# output is all lines in all of these .txt.gz files that contain the inputs above
-# ex: findLines.py 2016-03-07 02:34
+# input format: "yyyy-mm-dd hh:mm:ss" (not necessarily all these fields) and
+# a string (uuid for example) program takes in the format, and is run inside
+# of a directory with .txt.gz files. Output is all lines in all of these
+# .txt.gz files that contain the inputs above ex: findLines.py 2016-03-07 02:34
 # output:
         # 2016-03-07 02:34...<uuid>...
         # 2016-03-07 02:34...<uuid>...
@@ -45,7 +45,8 @@ def process_file2(content, mydate=None, mytime=None, mystring=None):
     for line in content:
         line = line.rstrip()
 
-        if not match:  # until we reach a match point in the file in terms of date/time
+        # until we reach a match point in file in terms of date/time
+        if not match:
             if mystring and mystring not in line:
                 continue
 
@@ -103,7 +104,8 @@ def process_all_input_files(myfiles, mydate, mytime, mystring):
 
 def get_all_input_files(mypath):
     files = [f for f in os.listdir(mypath) if (
-        os.path.isfile(os.path.join(mypath, f)) and f.endswith(('.txt', '.txt.gz')))]
+        os.path.isfile(os.path.join(mypath, f)) and
+        f.endswith(('.txt', '.txt.gz')))]
 
     return files
 
@@ -150,14 +152,22 @@ def parse_inputs():
 
     parser = argparse.ArgumentParser(description="log_file_search.py")
 
-    parser.add_argument("-p", "--path", dest="PATH",
-                        help="Enter the full path to the location of the files that need to be queried' dir", required=True, default=".")
-    parser.add_argument("-d", "--date", dest="DATE",
-                        help="Enter a search date in the format YYYY-MM-DD. Ex: 2016-09-23", required=True, default="")
-    parser.add_argument("-t", "--time", dest="TIME",
-                        help="Enter a search time (24hr time) in the format hh-mm-ss.ffff. Ex: 16:23:43.231", default=None)
     parser.add_argument(
-        "-s", "--string", dest="STRING", help="Enter a search string", default=None)
+        "-p", "--path", dest="PATH",
+        help=("Enter the full path to the location of the files "
+              "that need to be queried' dir"),
+        required=True, default=".")
+    parser.add_argument("-d", "--date", dest="DATE",
+                        help=("Enter a search date in the format YYYY-MM-DD. "
+                              "Ex: 2016-09-23"),
+                        required=True, default="")
+    parser.add_argument("-t", "--time", dest="TIME",
+                        help=("Enter a search time (24hr time) in the format "
+                              "hh-mm-ss.ffff. Ex: 16:23:43.231"),
+                        default=None)
+    parser.add_argument(
+        "-s", "--string", dest="STRING", help="Enter a search string",
+        default=None)
     parser.add_argument("-v", "--verbose", action="store_true",
                         dest="VERBOSE", help="Verbose mode", default=False)
 
@@ -183,7 +193,9 @@ def main():
 
     if time_val is None:
         print "Invalid date value supplied: {}".format(args.TIME)
-        print "Time should be in the format HH:MM:SS.FFF for example 15:23:43.123"
+        print ("Time should be in the format HH:MM:SS.FFF for example "
+               "15:23:43.123")
+
         sys.exit(1)
 
     inputfiles = get_all_input_files(args.PATH)

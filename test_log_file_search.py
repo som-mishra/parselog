@@ -11,74 +11,168 @@ class TestParseTestResults(unittest.TestCase):
 
     def setUp(self):
         self.content1 = [
-            "2016-03-07 23:08:31.706 27883 DEBUG ironic.cmd.conductor [-] Configuration: main /opt/stack/old/ironic/ironic/cmd/conductor.py:43",
-            "2016-03-07 23:08:31.750 27883 DEBUG ironic.cmd.conductor [-] ******************************************************************************** log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2320",
-            "2016-03-07 23:08:33.707 27883 DEBUG ironic.cmd.conductor [-] Configuration options gathered from: log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2321",
-            "2016-03-07 23:08:35.707 27883 hello ironic.cmd.conductor [-] command line args: ['--config-file=/etc/ironic/ironic.conf'] log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2322",
-            "2016-03-07 23:08:36.707 27883 DEBUG ironic.cmd.conductor [-] config files: ['/etc/ironic/ironic.conf'] log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2323",
-            "2016-03-07 23:08:40.707 27883 DEBUG ironic.cmd.conductor [-] ================================================================================ log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2324",
-            "2016-03-07 23:08:41.707 27883 DEBUG ironic.cmd.conductor [-] bindir                         = /opt/stack/old/ironic/ironic/bin log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 23:08:43.707 27883 DEBUG ironic.cmd.conductor [-] config_dir                     = None log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 23:08:45.708 27883 DEBUG ironic.cmd.conductor [-] config_file                    = ['/etc/ironic/ironic.conf'] log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 23:08:46.708 27883 DEBUG ironic.cmd.conductor [-] control_exchange               = ironic log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 23:08:50.708 27883 DEBUG ironic.cmd.conductor [-] debug                          = True log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333"
+            "2016-03-07 23:08:31.706 27883 DEBUG ironic.cmd.conductor [-]i\
+ Configuration: main /opt/stack/old/ironic/ironic/cmd/conductor.py:43",
+            "2016-03-07 23:08:31.750 27883 DEBUG ironic.cmd.conductor [-] \
+***************************************************************************\
+***** log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/\
+cfg.py:2320",
+            "2016-03-07 23:08:33.707 27883 DEBUG ironic.cmd.conductor [-] \
+Configuration options gathered from: log_opt_values /usr/local/lib/python2.7/\
+dist-packages/oslo_config/cfg.py:2321",
+            "2016-03-07 23:08:35.707 27883 hello ironic.cmd.conductor [-] \
+command line args: ['--config-file=/etc/ironic/ironic.conf'] log_opt_values \
+/usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2322",
+            "2016-03-07 23:08:36.707 27883 DEBUG ironic.cmd.conductor [-] \
+config files: ['/etc/ironic/ironic.conf'] log_opt_values /usr/local/lib/\
+python2.7/dist-packages/oslo_config/cfg.py:2323",
+            "2016-03-07 23:08:40.707 27883 DEBUG ironic.cmd.conductor [-] \
+==========================================================================\
+====== log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/\
+cfg.py:2324",
+            "2016-03-07 23:08:41.707 27883 DEBUG ironic.cmd.conductor [-] \
+bindir                         = /opt/stack/old/ironic/ironic/bin \
+log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 23:08:43.707 27883 DEBUG ironic.cmd.conductor \
+[-] config_dir                     = None log_opt_values /usr/local/lib/\
+python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 23:08:45.708 27883 DEBUG ironic.cmd.conductor [-] \
+config_file                    = ['/etc/ironic/ironic.conf'] log_opt_values \
+/usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 23:08:46.708 27883 DEBUG ironic.cmd.conductor [-] \
+control_exchange               = ironic log_opt_values /usr/local/lib/\
+python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 23:08:50.708 27883 DEBUG ironic.cmd.conductor \
+[-] debug                          = True log_opt_values /usr/local/lib/\
+python2.7/dist-packages/oslo_config/cfg.py:2333"
         ]
 
         self.content2 = [
             "++ [[ -n '' ]]",
             "++ echo 27883",
-            "++ setsid /usr/local/bin/ironic-conductor --config-file=/etc/ironic/ironic.conf",
+            "++ setsid /usr/local/bin/ironic-conductor --config-file=/etc/\
+ironic/ironic.conf",
             "++ exit 0",
-            "2016-03-07 23:08:31.706 27883 DEBUG ironic.cmd.conductor [-] Configuration: main /opt/stack/old/ironic/ironic/cmd/conductor.py:43",
-            "2016-03-07 23:08:31.750 27883 DEBUG ironic.cmd.conductor [-] ******************************************************************************** log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2320",
-            "2016-03-07 23:08:33.707 27883 DEBUG ironic.cmd.conductor [-] Configuration options gathered from: log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2321",
-            "2016-03-07 23:08:35.707 27883 hello ironic.cmd.conductor [-] command line args: ['--config-file=/etc/ironic/ironic.conf'] log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2322",
-            "2016-03-07 23:08:36.707 27883 DEBUG ironic.cmd.conductor [-] config files: ['/etc/ironic/ironic.conf'] log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2323",
-            "++ setsid /usr/local/bin/ironic-conductor --config-file=/etc/ironic/ironic.conf",
-            "2016-03-07 23:08:40.707 27883 DEBUG ironic.cmd.conductor [-] ================================================================================ log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2324",
-            "2016-03-07 23:08:41.707 27883 DEBUG ironic.cmd.conductor [-] bindir                         = /opt/stack/old/ironic/ironic/bin log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 23:08:43.707 27883 DEBUG ironic.cmd.conductor [-] config_dir                     = None log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 23:08:31.706 27883 DEBUG ironic.cmd.conductor [-] \
+Configuration: main /opt/stack/old/ironic/ironic/cmd/conductor.py:43",
+            "2016-03-07 23:08:31.750 27883 DEBUG ironic.cmd.conductor [-] \
+***************************************************************************\
+***** log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.\
+py:2320",
+            "2016-03-07 23:08:33.707 27883 DEBUG ironic.cmd.conductor [-] \
+Configuration options gathered from: log_opt_values /usr/local/lib/python2.7/\
+dist-packages/oslo_config/cfg.py:2321",
+            "2016-03-07 23:08:35.707 27883 hello ironic.cmd.conductor [-] \
+command line args: ['--config-file=/etc/ironic/ironic.conf'] log_opt_values \
+/usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2322",
+            "2016-03-07 23:08:36.707 27883 DEBUG ironic.cmd.conductor [-] \
+config files: ['/etc/ironic/ironic.conf'] log_opt_values /usr/local/lib/\
+python2.7/dist-packages/oslo_config/cfg.py:2323",
+            "++ setsid /usr/local/bin/ironic-conductor --config-file=/etc/\
+ironic/ironic.conf",
+            "2016-03-07 23:08:40.707 27883 DEBUG ironic.cmd.conductor [-] \
+============================================================================\
+==== log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/\
+cfg.py:2324",
+            "2016-03-07 23:08:41.707 27883 DEBUG ironic.cmd.conductor [-] \
+bindir                         = /opt/stack/old/ironic/ironic/bin \
+log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/\
+cfg.py:2333",
+            "2016-03-07 23:08:43.707 27883 DEBUG ironic.cmd.conductor [-] \
+config_dir                     = None log_opt_values /usr/local/lib/\
+python2.7/dist-packages/oslo_config/cfg.py:2333",
             "++ [[ -n '' ]]",
             "++ echo 27883",
-            "2016-03-07 23:08:45.708 27883 DEBUG ironic.cmd.conductor [-] config_file                    = ['/etc/ironic/ironic.conf'] log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 23:08:46.708 27883 hello ironic.cmd.conductor [-] control_exchange               = ironic log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 23:08:50.708 27883 DEBUG ironic.cmd.conductor [-] debug                          = True log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333"
+            "2016-03-07 23:08:45.708 27883 DEBUG ironic.cmd.conductor [-] \
+config_file                    = ['/etc/ironic/ironic.conf'] log_opt_values \
+/usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 23:08:46.708 27883 hello ironic.cmd.conductor [-] \
+control_exchange               = ironic log_opt_values /usr/local/lib/python\
+2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 23:08:50.708 27883 DEBUG ironic.cmd.conductor [-] \
+debug                          = True log_opt_values /usr/local/lib/python\
+2.7/dist-packages/oslo_config/cfg.py:2333"
         ]
         self.content3 = [
             "++ [[ -n '' ]]",
             "++ echo 27883",
-            "++ setsid /usr/local/bin/ironic-conductor --config-file=/etc/ironic/ironic.conf",
+            "++ setsid /usr/local/bin/ironic-conductor --config-file=/etc/\
+ironic/ironic.conf",
             "++ exit 0",
-            "2016-03-07 13:08:03.069 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] log_date_format                = %Y-%m-%d %H:%M:%S log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 13:08:03.069 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] log_dir                        = None log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 13:09:03.069 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] log_file                       = None log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 13:08:03.069 DEBUG oslo_service.service [req-a17d69b8\
+-066c-4482-a865-4347872504af None None] log_date_format                = %Y-\
+%m-%d %H:%M:%S log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_\
+config/cfg.py:2333",
+            "2016-03-07 13:08:03.069 DEBUG oslo_service.service [req-a17d69b8\
+-066c-4482-a865-4347872504af None None] log_dir                        = None \
+log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 13:09:03.069 DEBUG oslo_service.service [req-a17d69b8\
+-066c-4482-a865-4347872504af None None] log_file                       = \
+None log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/\
+cfg.py:2333",
             "alsbnofuabwpoeifa junk junk",
-            "++ setsid /usr/local/bin/ironic-conductor --config-file=/etc/ironic/ironic.conf",
+            "++ setsid /usr/local/bin/ironic-conductor --config-file=/etc/\
+ironic/ironic.conf",
             "++ exit 0",
-            "2016-03-07 14:09:03.069 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] log_format                     = None log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 14:09:03.069 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] log_options                    = True log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello :)",
-            "2016-03-07 14:10:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] logging_context_format_string  = %(asctime)s.%(msecs)03d %(levelname)s %(name)s [%(request_id)s %(user_name)s %(project_name)s] %(instance)s%(message)s log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 14:10:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] logging_debug_format_suffix    = %(funcName)s %(pathname)s:%(lineno)d log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 14:09:03.069 DEBUG oslo_service.service [req-a17d69b8\
+-066c-4482-a865-4347872504af None None] log_format                    = None \
+log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 14:09:03.069 DEBUG oslo_service.service [req-a17d69b8\
+-066c-4482-a865-4347872504af None None] log_options                    = \
+True log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/\
+cfg.py:2333",
+            "hellohellohellohellohellohellohellohellohellohellohellohello\
+hellohellohellohellohello :)",
+            "2016-03-07 14:10:03.070 DEBUG oslo_service.service [req-\
+a17d69b8-066c-4482-a865-4347872504af None None] logging_context_format_\
+string  = %(asctime)s.%(msecs)03d %(levelname)s %(name)s [%(request_id)s \
+%(user_name)s %(project_name)s] %(instance)s%(message)s log_opt_values \
+/usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 14:10:03.070 DEBUG oslo_service.service [req-a17d\
+69b8-066c-4482-a865-4347872504af None None] logging_debug_format_suffix    \
+= %(funcName)s %(pathname)s:%(lineno)d log_opt_values /usr/local/lib/\
+python2.7/dist-packages/oslo_config/cfg.py:2333",
             "random line",
-            "2016-03-07 14:11:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] logging_default_format_string  = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] logging_exception_prefix       = %(asctime)s.%(msecs)03d %(process)d ERROR %(name)s %(instance)s log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] logging_user_identity_format   = %(user)s %(tenant)s %(domain)s %(user_domain)s %(project_domain)s log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] max_age                        = 0 log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333"
+            "2016-03-07 14:11:03.070 DEBUG oslo_service.service [req-a17d69b8\
+-066c-4482-a865-4347872504af None None] logging_default_format_string  = \
+%(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)\
+s%(message)s log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_\
+config/cfg.py:2333",
+            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d6\
+9b8-066c-4482-a865-4347872504af None None] logging_exception_prefix       \
+= %(asctime)s.%(msecs)03d %(process)d ERROR %(name)s %(instance)s log_opt_\
+values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d6\
+9b8-066c-4482-a865-4347872504af None None] logging_user_identity_format   =\
+ %(user)s %(tenant)s %(domain)s %(user_domain)s %(project_domain)s log_opt_v\
+alues /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d69\
+b8-066c-4482-a865-4347872504af None None] max_age                        =\
+ 0 log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.p\
+y:2333"
         ]
 
     def test_get_line_datetime_valid1(self):
-        test_line1 = "2016-03-07 23:08:02.956 26887 WARNING oslo_reports.guru_meditation_report [-] Guru mediation now registers SIGUSR1 and SIGUSR2 by default for backward compatibility. SIGUSR1 will no longer be registered in a future release, so please use SIGUSR2 to generate reports."
+        test_line1 = "2016-03-07 23:08:02.956 26887 WARNING oslo_reports.\
+guru_meditation_report [-] Guru mediation now registers SIGUSR1 and SIGUSR2 \
+by default for backward compatibility. SIGUSR1 will no longer be registered \
+in a future release, so please use SIGUSR2 to generate reports."
         self.assertEqual(datetime.datetime(2016, 3, 7, 23, 8, 2, 956000),
                          log_file_search.get_line_datetime(test_line1))
 
     def test_get_line_datetime_valid2(self):
-        test_line2 = "2015-10-15 15:10:34.234 26887 WARNING oslo_reports.guru_meditation_report [-] Guru mediation now registers SIGUSR1 and SIGUSR2 by default for backward compatibility. SIGUSR1 will no longer be registered in a future release, so please use SIGUSR2 to generate reports."
+        test_line2 = "2015-10-15 15:10:34.234 26887 WARNING oslo_reports.\
+guru_meditation_report [-] Guru mediation now registers SIGUSR1 and SIGUSR2 \
+by default for backward compatibility. SIGUSR1 will no longer be registered \
+in a future release, so please use SIGUSR2 to generate reports."
         self.assertEqual(datetime.datetime(2015, 10, 15, 15, 10, 34, 234000),
                          log_file_search.get_line_datetime(test_line2))
 
     def test_get_line_datetime_valid3(self):
-        test_line3 = "1823-12-30 10:01:43.983 26887 WARNING oslo_reports.guru_meditation_report [-] Guru mediation now registers SIGUSR1 and SIGUSR2 by default for backward compatibility. SIGUSR1 will no longer be registered in a future release, so please use SIGUSR2 to generate reports."
+        test_line3 = "1823-12-30 10:01:43.983 26887 WARNING oslo_reports.\
+guru_meditation_report [-] Guru mediation now registers SIGUSR1 and SIGUSR2 \
+by default for backward compatibility. SIGUSR1 will no longer be registered \
+in a future release, so please use SIGUSR2 to generate reports."
         self.assertEqual(datetime.datetime(1823, 12, 30, 10, 1, 43, 983000),
                          log_file_search.get_line_datetime(test_line3))
 
@@ -183,8 +277,12 @@ class TestParseTestResults(unittest.TestCase):
         expected = []
 
         expected = [
-            "2016-03-07 23:08:35.707 27883 hello ironic.cmd.conductor [-] command line args: ['--config-file=/etc/ironic/ironic.conf'] log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2322",
-            "2016-03-07 23:08:46.708 27883 hello ironic.cmd.conductor [-] control_exchange               = ironic log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 23:08:35.707 27883 hello ironic.cmd.conductor [-] \
+command line args: ['--config-file=/etc/ironic/ironic.conf'] log_opt_values \
+/usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2322",
+            "2016-03-07 23:08:46.708 27883 hello ironic.cmd.conductor [-] \
+control_exchange               = ironic log_opt_values /usr/local/lib/\
+python2.7/dist-packages/oslo_config/cfg.py:2333",
         ]
         self.assertEqual(expected, log_file_search.process_file2(
             self.content2, mydate=date1, mytime=time1, mystring=string1))
@@ -208,8 +306,11 @@ class TestParseTestResults(unittest.TestCase):
         string1 = "--config"
 
         expected = [
-            "2016-03-07 23:08:35.707 27883 hello ironic.cmd.conductor [-] command line args: ['--config-file=/etc/ironic/ironic.conf'] log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2322",
-            "++ setsid /usr/local/bin/ironic-conductor --config-file=/etc/ironic/ironic.conf",
+            "2016-03-07 23:08:35.707 27883 hello ironic.cmd.conductor [-] \
+command line args: ['--config-file=/etc/ironic/ironic.conf'] log_opt_values \
+/usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2322",
+            "++ setsid /usr/local/bin/ironic-conductor --config-file=/etc\
+/ironic/ironic.conf",
         ]
         self.assertEqual(expected, log_file_search.process_file2(
             self.content2, mydate=date1, mytime=time1, mystring=string1))
@@ -236,14 +337,40 @@ class TestParseTestResults(unittest.TestCase):
         # JLV: Make this a subset of self.content3.  e.g expected =
         # self.content3[4:6] + self.content3[9:]
         expected = [
-            "2016-03-07 14:09:03.069 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] log_format                     = None log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 14:09:03.069 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] log_options                    = True log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 14:10:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] logging_context_format_string  = %(asctime)s.%(msecs)03d %(levelname)s %(name)s [%(request_id)s %(user_name)s %(project_name)s] %(instance)s%(message)s log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 14:10:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] logging_debug_format_suffix    = %(funcName)s %(pathname)s:%(lineno)d log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 14:11:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] logging_default_format_string  = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] logging_exception_prefix       = %(asctime)s.%(msecs)03d %(process)d ERROR %(name)s %(instance)s log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] logging_user_identity_format   = %(user)s %(tenant)s %(domain)s %(user_domain)s %(project_domain)s log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
-            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d69b8-066c-4482-a865-4347872504af None None] max_age                        = 0 log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333"
+            "2016-03-07 14:09:03.069 DEBUG oslo_service.service \
+[req-a17d69b8-066c-4482-a865-4347872504af None None] log_format      \
+              = None log_opt_values /usr/local/lib/python2.7/dist-packages\
+/oslo_config/cfg.py:2333",
+            "2016-03-07 14:09:03.069 DEBUG oslo_service.service \
+[req-a17d69b8-066c-4482-a865-4347872504af None None] log_options     \
+               = True log_opt_values /usr/local/lib/python2.7/dist-packages\
+/oslo_config/cfg.py:2333",
+            "2016-03-07 14:10:03.070 DEBUG oslo_service.service [req-a17d69\
+b8-066c-4482-a865-4347872504af None None] logging_context_format_string  \
+= %(asctime)s.%(msecs)03d %(levelname)s %(name)s [%(request_id)s %(user_name)\
+s %(project_name)s] %(instance)s%(message)s log_opt_values /usr/local/lib/\
+python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 14:10:03.070 DEBUG oslo_service.service [req-a17d69b\
+8-066c-4482-a865-4347872504af None None] logging_debug_format_suffix    = \
+%(funcName)s %(pathname)s:%(lineno)d log_opt_values /usr/local/lib/python2.7\
+/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 14:11:03.070 DEBUG oslo_service.service [req-a17d6\
+9b8-066c-4482-a865-4347872504af None None] logging_default_format_string  \
+= %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)\
+s%(message)s log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_con\
+fig/cfg.py:2333",
+            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d69b\
+8-066c-4482-a865-4347872504af None None] logging_exception_prefix       = \
+%(asctime)s.%(msecs)03d %(process)d ERROR %(name)s %(instance)s log_opt_\
+values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d\
+69b8-066c-4482-a865-4347872504af None None] logging_user_identity_format   \
+= %(user)s %(tenant)s %(domain)s %(user_domain)s %(project_domain)s log_\
+opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/cfg.py:2333",
+            "2016-03-07 15:08:03.070 DEBUG oslo_service.service [req-a17d\
+69b8-066c-4482-a865-4347872504af None None] max_age                        \
+= 0 log_opt_values /usr/local/lib/python2.7/dist-packages/oslo_config/\
+cfg.py:2333"
         ]
         self.assertEqual(expected, log_file_search.process_file2(
             self.content3, mydate=date1, mytime=time1, mystring=string1))
